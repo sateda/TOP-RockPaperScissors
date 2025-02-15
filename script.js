@@ -25,7 +25,8 @@ function getComputerChoice() {
 
 // Function that takes the users choice
 function getHumanChoice () {
-
+    let humanChoice = prompt("What's your choice? - Rock (1), Paper (2), Scissors (3)"); // set variable with the human choice
+    console.log(humanChoice);
 }
 
 // Function for one round takes two arguments to compare and decides the winner
@@ -39,4 +40,5 @@ function playGame() {
 }
 
 /* Game flow goes here */
-console.log(getComputerChoice());
+let computerChoice = getComputerChoice();
+let humanChoice = getHumanChoice();
