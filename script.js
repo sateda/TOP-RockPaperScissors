@@ -25,8 +25,16 @@ function getComputerChoice() {
 
 // Function that takes the users choice
 function getHumanChoice () {
-    let humanChoice = prompt("What's your choice? - Rock (1), Paper (2), Scissors (3)"); // set variable with the human choice
-    console.log(humanChoice);
+    let humanChoice = prompt("What's your choice? - Rock, Paper, Scissors"); // set variable with the human choice
+    humanChoice = humanChoice.toLowerCase(); // Make the input lowercase to compare to the options
+
+    // Validate the input, if the input is incorrect run the function again
+    if(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors") {
+        return humanChoice;
+    } else {
+        console.log("Wrong input, please try again.")
+        getHumanChoice();
+    }
 }
 
 // Function for one round takes two arguments to compare and decides the winner
@@ -40,5 +48,7 @@ function playGame() {
 }
 
 /* Game flow goes here */
-let computerChoice = getComputerChoice();
-let humanChoice = getHumanChoice();
+let computerScore = 0;
+let humanScore = 0;
+
+playRound(getHumanChoice(), getComputerChoice());
