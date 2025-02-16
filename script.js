@@ -76,15 +76,34 @@ function playRound(humanChoice, computerChoice) {
         default:
             console.log("some error occurred?");
     }
+
+    // update round variable
+    setRound++;
+    playGame();
 }
 
 // Function for one game, has five rounds and declares a winner
 function playGame() {
-
+    // checks the round and if lower or equal to five plays a game, else display the final score and declare the winner!
+    if(setRound <= 5) {
+        console.log("This is round: " + setRound); // Display which round this is
+        console.log("Score is human: " + humanScore + " vs computer: " + computerScore); // Display the current score
+        playRound(getHumanChoice(), getComputerChoice()); // Play a round
+    } else {
+        console.log("Final score is human: " + humanScore + " vs computer: " + computerScore);
+        // if humanScore is greater then computerScore display victory message, otherwise display the lose message
+        if(humanScore > computerScore) {
+            console.log("YOU WIN!!!");
+        } else {
+            console.log("YOU LOSE!!!");
+        }
+    }
 }
 
-/* Game flow goes here */
+/* Declare variable and run game */
 let computerScore = 0;
 let humanScore = 0;
+let setRound = 1;
 
-playRound(getHumanChoice(), getComputerChoice());
+// start the game
+playGame();
