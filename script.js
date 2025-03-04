@@ -1,9 +1,31 @@
-/* Rock Paper Scissors, console game */
+/* Declare variables */
+let computerScore = 0;
+let humanScore = 0;
+
+// Display score values
+document.querySelector("#score").innerHTML = "Human: " + humanScore + " Computer: " + computerScore;
+
+
+const choice = document.querySelector("#choices");
+choice.addEventListener('click', (event) => {
+    let target = event.target;
+    switch(target.id) {
+        case 'rock':
+            playRound("rock", getComputerChoice());
+            break;
+        case 'scissors':
+            playRound("scissors", getComputerChoice());
+            break;
+        case 'paper':
+            playRound("paper", getComputerChoice());
+            break;
+    }    
+});
 
 // Function that randomly returns "Rock", "Paper", "Scissors"
 function getComputerChoice() {
-    let computerChoice = undefined; // declare variable
-    let getRandomInteger = Math.floor(Math.random() * 3); // Get a random number
+    let computerChoice = undefined;
+    let getRandomInteger = Math.floor(Math.random() * 3);
 
     // Define computer choice
     switch(getRandomInteger) {
@@ -24,86 +46,56 @@ function getComputerChoice() {
     return computerChoice;
 }
 
-// Function that takes the users choice
-function getHumanChoice () {
-    let humanChoice = prompt("What's your choice? - Rock, Paper, Scissors"); // set variable with the human choice
-    humanChoice = humanChoice.toLowerCase(); // Make the input lowercase to compare to the options
-
-    // Validate the input, if the input is incorrect run the function again
-    if(humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors") {
-        return humanChoice;
-    } else {
-        console.log("Wrong input, please try again.")
-        getHumanChoice();
-    }
-}
-
 // Function for one round takes two arguments to compare and decides the winner
 function playRound(humanChoice, computerChoice) {  
-    console.log("You're choice: " + humanChoice); // display you're choice
-    console.log("Computers choice: " + computerChoice); // display computers choice
+    const resultSelector = document.querySelector("#result");
+    const result = document.createElement("p");
 
     // Check who wins
     switch(true) {
         case (humanChoice === computerChoice):
-            console.log("This is a tie, try again")
-            playRound(getHumanChoice(), getComputerChoice()); // play again
+            result.textContent = "This is a tie, try again";
             break;
         case (humanChoice === "rock" && computerChoice === "paper"):
-            console.log("You lose, paper beat rock!");
+            result.textContent = "You lose, paper beat rock!";
             computerScore++;
             break;
         case (humanChoice === "rock" && computerChoice === "scissors"):
-            console.log("You win! rock beats scissors.");
+            result.textContent = "You win! rock beats scissors.";
             humanScore++;
             break;
         case (humanChoice === "paper" && computerChoice === "scissors"):
-            console.log("You lose, scissors beat paper!");
+            result.textContent = "You lose, scissors beat paper!";
             computerScore++;
             break;
         case (humanChoice === "paper" && computerChoice === "rock"):
-            console.log("You win! paper beats rock.");
+            result.textContent = "You win! paper beats rock";
             humanScore++;
             break;
         case (humanChoice === "scissors" && computerChoice === "rock"):
-            console.log("You lose, rock beat scissors!");
+            result.textContent = "You lose, rock beat scissors!";
             computerScore++;
             break;
         case (humanChoice === "scissors" && computerChoice === "paper"):
-            console.log("You win! scissors beats paper.");
+            result.textContent = "You win! scissors beats paper";
             humanScore++;
             break;
         default:
             console.log("some error occurred?");
+            result.textContent = "some error occurred?";
     }
 
-    // update round variable
-    setRound++;
-    playGame();
-}
+    document.querySelector("#score").innerHTML = "Human: " + humanScore + " Computer: " + computerScore;
+    resultSelector.appendChild(result);
 
-// Function for one game, has five rounds and declares a winner
-function playGame() {
-    // checks the round and if lower or equal to five plays a game, else display the final score and declare the winner!
-    if(setRound <= 5) {
-        console.log("This is round: " + setRound); // Display which round this is
-        console.log("Score is human: " + humanScore + " vs computer: " + computerScore); // Display the current score
-        playRound(getHumanChoice(), getComputerChoice()); // Play a round
-    } else {
-        console.log("Final score is human: " + humanScore + " vs computer: " + computerScore);
-        // if humanScore is greater then computerScore display victory message, otherwise display the lose message
-        if(humanScore > computerScore) {
-            console.log("YOU WIN!!!");
-        } else {
-            console.log("YOU LOSE!!!");
-        }
+    if(humanScore === 5) {
+        document.querySelector("#score").innerHTML = "The human Wins the game!!!";
+        humanScore = 0;
+        computerScore = 0;
+    } else if (computerScore === 5) {
+        document.querySelector("#score").innerHTML = "The Computer wins the game!!!";
+        humanScore = 0;
+        computerScore = 0;
     }
 }
 
-/* Declare variable and run game */
-let computerScore = 0;
-let humanScore = 0;
-let setRound = 1;
-
-// start the game
-playGame();
